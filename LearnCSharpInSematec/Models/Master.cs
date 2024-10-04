@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace LearnCSharpInSematec.Models;
 
-namespace LearnCSharpInSematec.Models
+public class Master : User
 {
-    internal class Master
-    {
-    }
+    public int Id { get; set; }
+  
+    //زمان شروع همکاری با استاد
+    public DateTime CreateAt { get; set; }
 }

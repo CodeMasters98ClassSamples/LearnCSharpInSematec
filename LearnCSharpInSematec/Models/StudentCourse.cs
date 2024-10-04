@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace LearnCSharpInSematec.Models;
 
-namespace LearnCSharpInSematec.Models
+public class StudentCourse
 {
-    internal class StudentCourse
-    {
-        Student Student;
-        Master Master;
-        Course Course;
-    }
+    public Student Student { get; set; }
+    public Master Master { get; set; }
+    public Course Course { get; set; }
+
+    //زمان ثبت نام دانشجو در دوره مورد نظر با استاد مربوطه در سیستم
+    public DateTime CreateAt { get; set; }
 }
