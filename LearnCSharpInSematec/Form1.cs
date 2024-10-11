@@ -1,5 +1,5 @@
-using LearnCSharpInSematec.Enums;
-using LearnCSharpInSematec.Models;
+using BaseBackend.Entities;
+using LearnCSharpInSematec.Dtos;
 using LearnCSharpInSematec.Utilities;
 
 namespace LearnCSharpInSematec
@@ -52,74 +52,83 @@ namespace LearnCSharpInSematec
 
         private void registerButton_Click(object sender, EventArgs e)
         {
+            //Single Responsility
 
-            if (string.IsNullOrEmpty(firstNameTextBox.Text) ||
-                string.IsNullOrEmpty(lastNameTextBox.Text) ||
-                string.IsNullOrEmpty(phoneNumberTextBox.Text) || 
-                string.IsNullOrEmpty(nationalCodeTextBox.Text)) {
-                MessageBox.Show("Please enter valid inputs");
+            //Call Validation
+            if (!IsValidRegistrationForm())
                 return;
-            }
 
-            Console.WriteLine();
+            //Add
+            AddStudent addStudent = new AddStudent()
+            {
+                NationalCode = nationalCodeTextBox.Text,
+                FirstName = firstNameTextBox.Text,
+                LastName = lastNameTextBox.Text,
+                PhoneNumber = phoneNumberTextBox.Text.CleanPhoneNumber(),
+            };
+            AddStudent(addStudent);
 
-            //9129564205
-            //string phoneNumber = CleanPhoneNumber();
-            string phoneNumber = CleanData.PhoneNumber(phoneNumberTextBox.Text);
-            
-            //Style 1
-            //Student student = new Student();
-            //student.FirstName = firstNameTextBox.Text;
-            //student.LastName = lastNameTextBox.Text;
-            //student.NationalCode = nationalCodeTextBox.Text;
-            //student.PhoneNumber = phoneNumberTextBox.Text;
-
-            //Style 2
-            //Student student = new();
-            //student.FirstName = firstNameTextBox.Text;
-            //student.LastName = lastNameTextBox.Text;
-            //student.NationalCode = nationalCodeTextBox.Text;
-            //student.PhoneNumber = phoneNumberTextBox.Text;
-
-            //Style 3
-            //Student student = new()
-            //{
-            //    FirstName = firstNameTextBox.Text,
-            //    LastName = lastNameTextBox.Text,
-            //    NationalCode = nationalCodeTextBox.Text,
-            //    PhoneNumber = phoneNumberTextBox.Text
-            //};
-
-
-            Student student = new(firstName: firstNameTextBox.Text, lastName: lastNameTextBox.Text, phoneNumber: phoneNumber, nationalCode:nationalCodeTextBox.Text);
-            students.Add(student);
-
-            Student student1 = new(phoneNumber: phoneNumberTextBox.Text, nationalCode: nationalCodeTextBox.Text);
-            student1.Gender = Gender.MALE;
-            //Add Collection
-            //Add Database
+            //Message
             MessageBox.Show("Register Successfully");
 
+            //Reset
+            ResetRegistrationForm();
+        }
+
+        //DTO => Data Transffer Object
+        public void AddStudent(AddStudent addStudent)
+        {
+            //CreateObject
+            Student student = new(firstName: addStudent.FirstName, lastName: addStudent.LastName, phoneNumber: addStudent.PhoneNumber, nationalCode: addStudent.NationalCode);
+
+            //Add To Collection
+            students.Add(student);
+        }
+
+        private void ResetRegistrationForm()
+        {
             firstNameTextBox.Text = string.Empty;
             lastNameTextBox.Text = string.Empty;
             nationalCodeTextBox.Text = string.Empty;
             phoneNumberTextBox.Text = string.Empty;
         }
 
-        //private string CleanPhoneNumber(string phoneNumber)
-        //{
-        //    if (string.IsNullOrEmpty(phoneNumber))
-        //        return string.Empty;
-
-        //    phoneNumber = phoneNumber.Trim().Replace("+98", "0").Replace("0098", "0");
-        //    phoneNumber = phoneNumber.Length == 10 ? "0" + phoneNumber : phoneNumber;
-        //    return phoneNumber;
-        //}
-
-        private string CleanNationalCode(string nationalCode)
+        private bool IsValidRegistrationForm()
         {
-            return nationalCode;
+            if (string.IsNullOrEmpty(firstNameTextBox.Text) ||
+                string.IsNullOrEmpty(lastNameTextBox.Text) ||
+                string.IsNullOrEmpty(phoneNumberTextBox.Text) ||
+                string.IsNullOrEmpty(nationalCodeTextBox.Text))
+            {
+                MessageBox.Show("Please enter valid inputs");
+                return false;
+            }
+            else
+                return true;
         }
 
+
+        //Style 1
+        //Student student = new Student();
+        //student.FirstName = firstNameTextBox.Text;
+        //student.LastName = lastNameTextBox.Text;
+        //student.NationalCode = nationalCodeTextBox.Text;
+        //student.PhoneNumber = phoneNumberTextBox.Text;
+
+        //Style 2
+        //Student student = new();
+        //student.FirstName = firstNameTextBox.Text;
+        //student.LastName = lastNameTextBox.Text;
+        //student.NationalCode = nationalCodeTextBox.Text;
+        //student.PhoneNumber = phoneNumberTextBox.Text;
+
+        //Style 3
+        //Student student = new()
+        //{
+        //    FirstName = firstNameTextBox.Text,
+        //    LastName = lastNameTextBox.Text,
+        //    NationalCode = nationalCodeTextBox.Text,
+        //    PhoneNumber = phoneNumberTextBox.Text
+        //};
     }
 }

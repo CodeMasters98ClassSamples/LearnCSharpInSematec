@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 
 namespace LearnCSharpInSematec.Utilities;
 
+
+//Class member => Property + Methods
 public static class CleanData
 {
     /// <summary>

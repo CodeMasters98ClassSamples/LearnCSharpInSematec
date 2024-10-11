@@ -1,14 +1,15 @@
 ﻿#nullable disable
 
-using LearnCSharpInSematec.Enums;
+using BaseBackend.Enums;
 
-namespace LearnCSharpInSematec.Models;
+namespace BaseBackend.Entities;
 
 //Container For Methods and Property
 //Template for object
 //Custom Data Type
 public class Student : User
 {
+    #region Constructors
     public Student()
     {
         InitialGender();
@@ -28,16 +29,15 @@ public class Student : User
         InitialGender();
     }
 
-    //AccessModifier DataType Name {get; set;}
-    public int Id { get; set; }
-   
+    #endregion
+
+    #region Properties
     public Gender Gender { get; set; }
 
-    //زمان ثبت نام دانشجو در سیستم
-    public DateTime CreateAt { get; set; }
+    #endregion
 
+    #region Methods
     public void ChangeFirstName(string newFirstName) => FirstName = newFirstName;
-
     public void UpdateUser(string newFirstName, string newLastName)
     {
         if (!string.IsNullOrEmpty(newFirstName))
@@ -46,6 +46,7 @@ public class Student : User
         if (!string.IsNullOrEmpty(newLastName))
             LastName = newLastName;
     }
-
     private void InitialGender() => Gender = Gender.NOT_SET;
+    #endregion
+
 }

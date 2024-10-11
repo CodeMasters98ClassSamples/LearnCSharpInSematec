@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34511.84
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LearnCSharpInSematec", "LearnCSharpInSematec\LearnCSharpInSematec.csproj", "{81A864F7-3ED1-409D-BD3B-AEA8A2E34E41}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LearnCSharpInSematec", "LearnCSharpInSematec\LearnCSharpInSematec.csproj", "{81A864F7-3ED1-409D-BD3B-AEA8A2E34E41}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinanceLearingInCSharp", "FinanceLearingInCSharp\FinanceLearingInCSharp.csproj", "{7CE61BC8-6C44-4051-89D4-A8338FA21EBD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BaseBackend", "BaseBackend\BaseBackend.csproj", "{618063B0-9BFB-4743-91C2-BC30DF0EB42D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{81A864F7-3ED1-409D-BD3B-AEA8A2E34E41}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{81A864F7-3ED1-409D-BD3B-AEA8A2E34E41}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{81A864F7-3ED1-409D-BD3B-AEA8A2E34E41}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7CE61BC8-6C44-4051-89D4-A8338FA21EBD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7CE61BC8-6C44-4051-89D4-A8338FA21EBD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7CE61BC8-6C44-4051-89D4-A8338FA21EBD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7CE61BC8-6C44-4051-89D4-A8338FA21EBD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{618063B0-9BFB-4743-91C2-BC30DF0EB42D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{618063B0-9BFB-4743-91C2-BC30DF0EB42D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{618063B0-9BFB-4743-91C2-BC30DF0EB42D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{618063B0-9BFB-4743-91C2-BC30DF0EB42D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,4 +1,4 @@
-﻿namespace LearnCSharpInSematec.Enums;
+﻿namespace BaseBackend.Enums;
 
 public enum Gender
 {
