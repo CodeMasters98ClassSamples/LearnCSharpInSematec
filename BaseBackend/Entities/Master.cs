@@ -1,5 +1,5 @@
 ﻿namespace BaseBackend.Entities;
 
-internal class Master : User
+public class Master : User
 {
 }

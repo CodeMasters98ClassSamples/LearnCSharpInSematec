@@ -10,29 +10,27 @@ namespace BaseBackend.Entities;
 public class Student : User
 {
     #region Constructors
-    public Student()
+    public Student() : base()
     {
-        InitialGender();
+        //InitialGender();
     }
 
-    public Student(string phoneNumber, string nationalCode) : base()
+    public Student(string phoneNumber, string nationalCode) :this()
     {
         PhoneNumber = phoneNumber;
         NationalCode = nationalCode;
-        InitialGender();
     }
 
-    public Student(string firstName, string lastName, string phoneNumber, string nationalCode) //: base(phoneNumber,nationalCode)
+    public Student(string firstName, string lastName, string phoneNumber, string nationalCode) : this(phoneNumber,nationalCode)
     {
         FirstName = firstName;
         LastName = lastName;
-        InitialGender();
     }
 
     #endregion
 
     #region Properties
-    public Gender Gender { get; set; }
+    
 
     #endregion
 
@@ -46,7 +44,6 @@ public class Student : User
         if (!string.IsNullOrEmpty(newLastName))
             LastName = newLastName;
     }
-    private void InitialGender() => Gender = Gender.NOT_SET;
     #endregion
 
 }
