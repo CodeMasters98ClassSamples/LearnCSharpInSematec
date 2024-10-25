@@ -4,12 +4,15 @@ namespace LearnCSharpInSematec
     {
         public Form1()
         {
+            //UI
             InitializeComponent();
+            isRememberMeCheckBox.Checked = true;
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            string username = UsernameTextBox.Text;
+            bool isRemember = isRememberMeCheckBox.Checked;
+             string username = UsernameTextBox.Text;
             string password = PasswordTextBox.Text;
             if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
             {

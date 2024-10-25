@@ -38,6 +38,8 @@
             label3 = new Label();
             firstNameTextBox = new TextBox();
             studentDataGridView = new DataGridView();
+            genderComboBox = new ComboBox();
+            label1 = new Label();
             ((System.ComponentModel.ISupportInitialize)studentDataGridView).BeginInit();
             SuspendLayout();
             // 
@@ -123,11 +125,30 @@
             studentDataGridView.Size = new Size(567, 235);
             studentDataGridView.TabIndex = 23;
             // 
+            // genderComboBox
+            // 
+            genderComboBox.FormattingEnabled = true;
+            genderComboBox.Location = new Point(452, 141);
+            genderComboBox.Name = "genderComboBox";
+            genderComboBox.Size = new Size(121, 23);
+            genderComboBox.TabIndex = 24;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new Point(401, 144);
+            label1.Name = "label1";
+            label1.Size = new Size(45, 15);
+            label1.TabIndex = 25;
+            label1.Text = "Gender";
+            // 
             // StudentForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(585, 433);
+            Controls.Add(label1);
+            Controls.Add(genderComboBox);
             Controls.Add(studentDataGridView);
             Controls.Add(registerButton);
             Controls.Add(label6);
@@ -157,5 +178,7 @@
         private Label label3;
         private TextBox firstNameTextBox;
         private DataGridView studentDataGridView;
+        private ComboBox genderComboBox;
+        private Label label1;
     }
 }

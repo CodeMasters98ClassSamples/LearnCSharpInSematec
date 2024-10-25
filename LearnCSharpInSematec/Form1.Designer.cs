@@ -33,11 +33,12 @@
             PasswordTextBox = new TextBox();
             label1 = new Label();
             label2 = new Label();
+            isRememberMeCheckBox = new CheckBox();
             SuspendLayout();
             // 
             // button1
             // 
-            button1.Location = new Point(5, 99);
+            button1.Location = new Point(5, 114);
             button1.Name = "button1";
             button1.Size = new Size(249, 39);
             button1.TabIndex = 0;
@@ -77,11 +78,22 @@
             label2.TabIndex = 4;
             label2.Text = "Password";
             // 
+            // isRememberMeCheckBox
+            // 
+            isRememberMeCheckBox.AutoSize = true;
+            isRememberMeCheckBox.Location = new Point(71, 89);
+            isRememberMeCheckBox.Name = "isRememberMeCheckBox";
+            isRememberMeCheckBox.Size = new Size(104, 19);
+            isRememberMeCheckBox.TabIndex = 5;
+            isRememberMeCheckBox.Text = "Remember Me";
+            isRememberMeCheckBox.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(264, 148);
+            ClientSize = new Size(264, 165);
+            Controls.Add(isRememberMeCheckBox);
             Controls.Add(label2);
             Controls.Add(label1);
             Controls.Add(PasswordTextBox);
@@ -100,5 +112,6 @@
         private TextBox PasswordTextBox;
         private Label label1;
         private Label label2;
+        private CheckBox isRememberMeCheckBox;
     }
 }

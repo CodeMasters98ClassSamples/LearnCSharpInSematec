@@ -1,4 +1,5 @@
 ﻿using BaseBackend.Entities;
+using BaseBackend.Enums;
 using LearnCSharpInSematec.Dtos;
 using LearnCSharpInSematec.Utilities;
 
@@ -17,10 +18,20 @@ namespace LearnCSharpInSematec
             students.Add(new Student() { FirstName = "Parham 2", LastName = "Darvsihi 2", IsDeleted = true, NationalCode = "00001" });
             studentDataGridView.DataSource = students;
 
+            List<string> comboList = new List<string>();
+            //comboList.Add("لطفا انتخاب نمایید");
+            //comboList.Add("مرد");
+            //comboList.Add("زن");
+            //comboList.Add("نامخشص");
+            genderComboBox.DataSource = comboList;
+            genderComboBox.BackColor = Color.Red;
+            genderComboBox.DataSource = Enum.GetValues(typeof(Gender));
+
         }
 
         private void registerButton_Click(object sender, EventArgs e)
         {
+            var genderEnum = genderComboBox.SelectedIndex;
 
             Student student = new Student();
             student.FirstName = firstNameTextBox.Text;
@@ -38,6 +49,7 @@ namespace LearnCSharpInSematec
                 FirstName = firstNameTextBox.Text,
                 LastName = lastNameTextBox.Text,
                 PhoneNumber = phoneNumberTextBox.Text.CleanPhoneNumber(),
+                Gender = (Gender)genderEnum
             };
             AddStudent(addStudent);
 

@@ -1,5 +1,7 @@
 ﻿#nullable disable
 
+using BaseBackend.Enums;
+
 namespace LearnCSharpInSematec.Dtos;
 
 
@@ -10,4 +12,5 @@ public sealed class AddStudent
     public string LastName { get; set; }
     public string PhoneNumber { get; set; }
     public string NationalCode { get; set; }
+    public Gender Gender { get; set; }
 }
