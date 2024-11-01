@@ -1,12 +1,14 @@
 ﻿#nullable disable
 
 using BaseBackend.Enums;
+using System.Diagnostics;
 
 namespace BaseBackend.Entities;
 
 //Container For Methods and Property
 //Template for object
 //Custom Data Type
+[DebuggerDisplay("Student {Id}: {FirstName} {LastName}.")]
 public class Student : User
 {
     #region Constructors

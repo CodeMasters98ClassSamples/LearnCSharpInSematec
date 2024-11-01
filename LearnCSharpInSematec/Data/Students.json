@@ -1,0 +1,20 @@
+[
+  {
+    "Id": 1,
+    "NationalCode": "11111",
+    "FirstName": "پرهام",
+    "LastName": "درویشی",
+    "PhoneNumber": "09129564205",
+    "LastDocument": "کارشناسی ارشد",
+    "Gender": 1
+  },
+  {
+    "Id": 2,
+    "NationalCode": "22222222",
+    "FirstName": "مصطفی",
+    "LastName": "مصطفی",
+    "PhoneNumber": "09129564206",
+    "LastDocument": "کارشناسی ",
+    "Gender": 1
+  }
+]

@@ -2,6 +2,8 @@
 using BaseBackend.Enums;
 using LearnCSharpInSematec.Dtos;
 using LearnCSharpInSematec.Utilities;
+using Newtonsoft.Json;
+using System;
 
 namespace LearnCSharpInSematec
 {
@@ -13,11 +15,14 @@ namespace LearnCSharpInSematec
         {
             InitializeComponent();
             //Initial Value Form
-            students = new List<Student>();
-            students.Add(new Student() { FirstName = "Parham", LastName = "Darvsihi", IsDeleted = false,NationalCode = "00000"});
-            students.Add(new Student() { FirstName = "Parham 2", LastName = "Darvsihi 2", IsDeleted = true, NationalCode = "00001" });
-            studentDataGridView.DataSource = students;
 
+            var studentJsonPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data", "Students.json");
+            if (File.Exists(studentJsonPath))
+            {
+                string studentJsonStr = File.ReadAllText(studentJsonPath);
+                students = JsonConvert.DeserializeObject<List<Student>>(studentJsonStr) ?? [];
+                studentDataGridView.DataSource = students;
+            }
             List<string> comboList = new List<string>();
             //comboList.Add("لطفا انتخاب نمایید");
             //comboList.Add("مرد");
@@ -80,6 +85,7 @@ namespace LearnCSharpInSematec
             lastNameTextBox.Text = string.Empty;
             nationalCodeTextBox.Text = string.Empty;
             phoneNumberTextBox.Text = string.Empty;
+            genderComboBox.SelectedIndex = 0;
         }
 
         //DTO => Data Transffer Object
@@ -94,6 +100,17 @@ namespace LearnCSharpInSematec
             studentDataGridView.DataSource = null;
             studentDataGridView.DataSource = students;
             studentDataGridView.Refresh();
+        }
+
+        private void ResetButton_Click(object sender, EventArgs e)
+        {
+            ResetRegistrationForm();
+            MessageBox.Show("Form Reset!");
+        }
+
+        private void studentDataGridView_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            int x = 0;
         }
     }
 }
