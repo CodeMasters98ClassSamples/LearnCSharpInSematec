@@ -128,6 +128,7 @@
             studentDataGridView.Size = new Size(567, 277);
             studentDataGridView.TabIndex = 23;
             studentDataGridView.CellClick += studentDataGridView_CellClick;
+            studentDataGridView.CellContentClick += studentDataGridView_CellContentClick;
             // 
             // genderComboBox
             // 

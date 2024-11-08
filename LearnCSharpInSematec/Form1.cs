@@ -24,6 +24,7 @@ namespace LearnCSharpInSematec
 
         private void button1_Click(object sender, EventArgs e)
         {
+            //Older Than C# 2
             bool isValidUsernameAndPassword = false;
             bool isRemember = isRememberMeCheckBox.Checked;
             string username = UsernameTextBox.Text;
@@ -35,21 +36,34 @@ namespace LearnCSharpInSematec
             }
 
             //Linq
-            foreach (var userLogin in userLogins)
+            //C# 2 -> Delegate
+            List<UserLogin> findedUserLogins = userLogins
+                    .Where(userLogin => username.ToLower() == userLogin.UserName.ToLower() && 
+                    password == userLogin.Password)
+                    .ToList();
+            if (findedUserLogins is not null && findedUserLogins.Count > 0)
             {
-                if (username.ToLower() == userLogin.UserName.ToLower() && password == userLogin.Password)
-                {
-                    isValidUsernameAndPassword = true;
-                    //Redirect to Student Form
-                    StudentForm studentForm = new StudentForm();
-                    studentForm.Show();
-
-                    this.Hide();
-                    break;
-                }
-                else
-                    continue;
+                isValidUsernameAndPassword = true;
+                //Redirect to Student Form
+                StudentForm studentForm = new StudentForm();
+                studentForm.Show();
+                this.Hide();
             }
+
+            //foreach (var userLogin in userLogins)
+            //{
+            //    if (username.ToLower() == userLogin.UserName.ToLower() && password == userLogin.Password)
+            //    {
+            //        isValidUsernameAndPassword = true;
+            //        //Redirect to Student Form
+            //        StudentForm studentForm = new StudentForm();
+            //        studentForm.Show();
+            //        this.Hide();
+            //        break;
+            //    }
+            //    else
+            //        continue;
+            //}
 
             if (!isValidUsernameAndPassword)
             {
