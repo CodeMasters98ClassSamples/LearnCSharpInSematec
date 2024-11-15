@@ -37,11 +37,17 @@ namespace LearnCSharpInSematec
 
             //Linq
             //C# 2 -> Delegate
-            List<UserLogin> findedUserLogins = userLogins
-                    .Where(userLogin => username.ToLower() == userLogin.UserName.ToLower() && 
+            //List<UserLogin> findedUserLogins = userLogins
+            //        .Where(userLogin => username.ToLower() == userLogin.UserName.ToLower() && 
+            //        password == userLogin.Password)
+            //        .ToList();
+
+            UserLogin? findedUserLogin = userLogins
+                    .Where(userLogin => username.ToLower() == userLogin.UserName.ToLower() &&
                     password == userLogin.Password)
-                    .ToList();
-            if (findedUserLogins is not null && findedUserLogins.Count > 0)
+                    .FirstOrDefault();
+
+            if (findedUserLogin is not null)
             {
                 isValidUsernameAndPassword = true;
                 //Redirect to Student Form

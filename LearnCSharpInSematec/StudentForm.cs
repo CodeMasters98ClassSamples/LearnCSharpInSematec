@@ -1,4 +1,5 @@
-﻿using BaseBackend.Entities;
+﻿using BaseBackend.Businesses;
+using BaseBackend.Entities;
 using BaseBackend.Enums;
 using LearnCSharpInSematec.Dtos;
 using LearnCSharpInSematec.Utilities;
@@ -8,6 +9,9 @@ namespace LearnCSharpInSematec
 {
     public partial class StudentForm : Form
     {
+
+        private readonly StudentBusiness _studentBusiness;
+
         //Delegate
         public delegate void ReloadData();
 
@@ -24,13 +28,11 @@ namespace LearnCSharpInSematec
         {
             InitializeComponent();
             ReloadDataEvent += FillDataIntoDataGridView; //Bind Method to event
-            var studentJsonPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data", "Students.json");
-            if (File.Exists(studentJsonPath))
-            {
-                string studentJsonStr = File.ReadAllText(studentJsonPath);
-                students = JsonConvert.DeserializeObject<List<Student>>(studentJsonStr) ?? [];
-                ReloadDataEvent.Invoke();
-            }
+
+            _studentBusiness =  new StudentBusiness();
+            students = _studentBusiness.GetStudens();
+            ReloadDataEvent.Invoke();
+
             FillGenderComoboBox();
         }
 
@@ -59,6 +61,7 @@ namespace LearnCSharpInSematec
 
         public void FillDataIntoDataGridView()
         {
+            students = _studentBusiness.GetStudens();
             studentDataGridView.DataSource = null;
             studentDataGridView.DataSource = students;
             studentDataGridView.Refresh();
@@ -82,23 +85,19 @@ namespace LearnCSharpInSematec
             Student student = new(firstName: addStudent.FirstName, lastName: addStudent.LastName, phoneNumber: addStudent.PhoneNumber, nationalCode: addStudent.NationalCode);
 
             //Add To Collection
-            students.Add(student);
+            //students.Add(student);
+
+            //From Db
+            _studentBusiness.AddStudent(student);
+
             ReloadDataEvent.Invoke();
         }
 
         private void registerButton_Click(object sender, EventArgs e)
         {
-            var genderEnum = genderComboBox.SelectedIndex;
-
-            Student student = new Student();
-            student.FirstName = firstNameTextBox.Text;
-
-            //Single Responsility
-
             //Call Validation
             if (!IsValidRegistrationForm())
                 return;
-
             //Add
             AddStudent addStudent = new AddStudent()
             {
@@ -106,13 +105,11 @@ namespace LearnCSharpInSematec
                 FirstName = firstNameTextBox.Text,
                 LastName = lastNameTextBox.Text,
                 PhoneNumber = phoneNumberTextBox.Text.CleanPhoneNumber(),
-                Gender = (Gender)genderEnum
+                Gender = (Gender)genderComboBox.SelectedIndex
             };
             AddStudent(addStudent);
-
             //Message
             MessageBox.Show("Register Successfully");
-
             //Reset
             //Method Call
             ResetRegistrationForm();
