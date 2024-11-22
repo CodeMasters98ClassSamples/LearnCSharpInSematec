@@ -1,19 +1,21 @@
-﻿using BaseBackend.Entities;
-using System;
+﻿using BaseBackend.Businesses.Interfaces;
+using BaseBackend.Entities;
+using BaseBackend.Enums;
+using System.Configuration;
 using System.Data.SqlClient;
 
 namespace BaseBackend.Businesses;
 
-public class StudentBusiness
+public class StudentBusiness : IBaseBusiness<Student>
 {
-    const string connectionString = "Data Source=.;Initial Catalog=BookShop;Integrated Security=True;";
+    string connectionString = ConfigurationManager.ConnectionStrings["LearnCSharpDb"].ToString();
 
     public StudentBusiness()
     {
         
     }
 
-    public List<Student> GetStudens()
+    public List<Student> GetAll()
     {
         List<Student> students = new List<Student>();
 
@@ -27,7 +29,7 @@ public class StudentBusiness
                 connection.Open();
 
                 // Create a SQL command to select data from the table
-                string query = $"SELECT Id,FirstName, LastName, PhoneNumber FROM {tableName}";
+                string query = $"SELECT Id,FirstName, LastName, PhoneNumber,NationalCode,Gender FROM {tableName}";
                 SqlCommand command = new SqlCommand(query, connection);
 
                 // Create a data reader to fetch the data
@@ -41,7 +43,9 @@ public class StudentBusiness
                         Id = (int)reader["Id"],
                         FirstName = reader["FirstName"].ToString(),
                         LastName = reader["LastName"].ToString(),
-                        PhoneNumber = reader["PhoneNumber"].ToString()
+                        PhoneNumber = reader["PhoneNumber"].ToString(),
+                        NationalCode = reader["NationalCode"].ToString(),
+                        Gender = (Gender)int.Parse(reader["Gender"].ToString() ?? "0"),
                     };
                     students.Add(student);
                 }
@@ -60,7 +64,7 @@ public class StudentBusiness
         }
     }
 
-    public bool AddStudent(Student student)
+    public bool Add(Student student)
     {
         using (SqlConnection connection = new SqlConnection(connectionString))
         {
@@ -89,7 +93,7 @@ public class StudentBusiness
         }
     }
 
-    public bool UpdateStudent(Student student)
+    public bool Update(Student student)
     {
         using (SqlConnection connection = new SqlConnection(connectionString))
         {
@@ -100,12 +104,18 @@ public class StudentBusiness
                 string query = $"UPDATE {tableName} " +
                     $"SET FirstName = @FirstName," +
                     $"LastName = @LastName, " +
-                    $"PhoneNumber = @PhoneNumber " +
+                    $"PhoneNumber = @PhoneNumber, " +
+                    $"IsDeleted = @IsDeleted, " +
+                    $"DeletedAt = @DeletedAt, " +
+                    $"NationalCode = @NationalCode " +
                     $"WHERE Id = @Id";
                 SqlCommand command = new SqlCommand(query, connection);
                 command.Parameters.AddWithValue("@FirstName", student.FirstName);
                 command.Parameters.AddWithValue("@LastName", student.LastName);
                 command.Parameters.AddWithValue("@PhoneNumber", student.PhoneNumber);
+                command.Parameters.AddWithValue("@NationalCode", student.NationalCode);
+                command.Parameters.AddWithValue("@DeletedAt", student.DeletedAt);
+                command.Parameters.AddWithValue("@IsDeleted", student.IsDeleted);
                 command.Parameters.AddWithValue("@Id", student.Id);
                 int rowsAffected = command.ExecuteNonQuery();
                 return rowsAffected > 0;
@@ -122,7 +132,7 @@ public class StudentBusiness
         }
     }
 
-    public bool DeleteStudent(int Id)
+    public bool Delete(int Id)
     {
         using (SqlConnection connection = new SqlConnection(connectionString))
         {
@@ -147,4 +157,5 @@ public class StudentBusiness
             }
         }
     }
+
 }

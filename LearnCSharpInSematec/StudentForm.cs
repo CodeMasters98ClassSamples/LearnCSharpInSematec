@@ -3,7 +3,6 @@ using BaseBackend.Entities;
 using BaseBackend.Enums;
 using LearnCSharpInSematec.Dtos;
 using LearnCSharpInSematec.Utilities;
-using Newtonsoft.Json;
 
 namespace LearnCSharpInSematec
 {
@@ -13,13 +12,14 @@ namespace LearnCSharpInSematec
         private readonly StudentBusiness _studentBusiness;
 
         //Delegate
-        public delegate void ReloadData();
+        public delegate void ReloadData(List<Student> students);
 
         //Event?
         // Declare the event.
         public event ReloadData ReloadDataEvent;
 
         List<Student> students;
+        Student currentStudent;
 
         /// <summary>
         /// Fill Combobox,Fill Intial Data
@@ -29,9 +29,9 @@ namespace LearnCSharpInSematec
             InitializeComponent();
             ReloadDataEvent += FillDataIntoDataGridView; //Bind Method to event
 
-            _studentBusiness =  new StudentBusiness();
-            students = _studentBusiness.GetStudens();
-            ReloadDataEvent.Invoke();
+            _studentBusiness = new StudentBusiness();
+            students = _studentBusiness.GetAll();
+            ReloadDataEvent.Invoke(students);
 
             FillGenderComoboBox();
         }
@@ -57,11 +57,11 @@ namespace LearnCSharpInSematec
             nationalCodeTextBox.Text = string.Empty;
             phoneNumberTextBox.Text = string.Empty;
             genderComboBox.SelectedIndex = 0;
+            currentStudent = null;
         }
 
-        public void FillDataIntoDataGridView()
+        public void FillDataIntoDataGridView(List<Student> students)
         {
-            students = _studentBusiness.GetStudens();
             studentDataGridView.DataSource = null;
             studentDataGridView.DataSource = students;
             studentDataGridView.Refresh();
@@ -88,9 +88,7 @@ namespace LearnCSharpInSematec
             //students.Add(student);
 
             //From Db
-            _studentBusiness.AddStudent(student);
-
-            ReloadDataEvent.Invoke();
+            _studentBusiness.Add(student);
         }
 
         private void registerButton_Click(object sender, EventArgs e)
@@ -108,6 +106,8 @@ namespace LearnCSharpInSematec
                 Gender = (Gender)genderComboBox.SelectedIndex
             };
             AddStudent(addStudent);
+            students = _studentBusiness.GetAll();
+            ReloadDataEvent.Invoke(students);
             //Message
             MessageBox.Show("Register Successfully");
             //Reset
@@ -123,12 +123,106 @@ namespace LearnCSharpInSematec
 
         private void studentDataGridView_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            int x = 0;
+            if (e.RowIndex >= 0)
+            {
+                var row = studentDataGridView.Rows[e.RowIndex];
+                var id = (int)row.Cells["Id"].Value;
+                var student = students.Where(x => x.Id == id).FirstOrDefault();
+
+                nationalCodeTextBox.Text = student.NationalCode;
+                firstNameTextBox.Text = student.FirstName;
+                lastNameTextBox.Text = student.LastName;
+                phoneNumberTextBox.Text = student.PhoneNumber;
+                genderComboBox.SelectedIndex = (int)student.Gender;
+                currentStudent = student;
+            }
         }
 
         private void studentDataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
+        }
+
+        private void UpdateButton_Click(object sender, EventArgs e)
+        {
+            if (currentStudent is null)
+            {
+                MessageBox.Show("شما کاربری را جهت به روز رسانی اطلاعات انتخاب نکرده اید!");
+                return;
+            }
+
+            Student student = new Student()
+            {
+                NationalCode = nationalCodeTextBox.Text,
+                FirstName = firstNameTextBox.Text,
+                LastName = lastNameTextBox.Text,
+                PhoneNumber = phoneNumberTextBox.Text.CleanPhoneNumber(),
+                Gender = (Gender)genderComboBox.SelectedIndex,
+                Id = currentStudent.Id
+            };
+            _studentBusiness.Update(student);
+            students = _studentBusiness.GetAll();
+            ReloadDataEvent.Invoke(students);
+            ResetRegistrationForm();
+        }
+
+        private void RefreshButton_Click(object sender, EventArgs e)
+        {
+            students = _studentBusiness.GetAll();
+            ReloadDataEvent.Invoke(students);
+        }
+
+        private void DeleteButton_Click(object sender, EventArgs e)
+        {
+            if (currentStudent is null)
+            {
+                MessageBox.Show("شما کاربری را جهت به حذف اطلاعات انتخاب نکرده اید!");
+                return;
+            }
+            _studentBusiness.Delete(Id: currentStudent.Id);
+            students = _studentBusiness.GetAll();
+            ReloadDataEvent.Invoke(students);
+            ResetRegistrationForm();
+        }
+
+        private void SoftDeleteButton_Click(object sender, EventArgs e)
+        {
+            if (currentStudent is null)
+            {
+                MessageBox.Show("شما کاربری را جهت به حذف اطلاعات انتخاب نکرده اید!");
+                return;
+            }
+            Student student = new Student()
+            {
+                NationalCode = currentStudent.NationalCode,
+                FirstName = currentStudent.FirstName,
+                LastName = currentStudent.LastName,
+                PhoneNumber = currentStudent.PhoneNumber,
+                Gender = currentStudent.Gender,
+                Id = currentStudent.Id,
+                IsDeleted = true,
+                DeletedAt = DateTime.Now,
+            };
+            _studentBusiness.Update(student);
+            students = _studentBusiness.GetAll();
+            ReloadDataEvent.Invoke(students);
+        }
+
+        private void fisrtNameSeacrhTextBox_TextChanged(object sender, EventArgs e)
+        {
+            string searchedText = fisrtNameSeacrhTextBox.Text;
+            if (string.IsNullOrEmpty(searchedText))
+            {
+                students = _studentBusiness.GetAll();
+                ReloadDataEvent.Invoke(students);
+            }
+            else
+            {
+                searchedText = searchedText.Trim().ToLower();
+                students = students.Where(x => x.FirstName.ToLower().Contains(searchedText)).ToList();
+                ReloadDataEvent.Invoke(students);
+            }
+            
         }
     }
 }
