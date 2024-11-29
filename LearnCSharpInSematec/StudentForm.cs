@@ -8,7 +8,7 @@ namespace LearnCSharpInSematec
 {
     public partial class StudentForm : Form
     {
-
+        //We must use global exception handler
         private readonly StudentBusiness _studentBusiness;
 
         //Delegate
@@ -29,6 +29,7 @@ namespace LearnCSharpInSematec
             InitializeComponent();
             ReloadDataEvent += FillDataIntoDataGridView; //Bind Method to event
 
+            //Use DI
             _studentBusiness = new StudentBusiness();
             students = _studentBusiness.GetAll();
             ReloadDataEvent.Invoke(students);

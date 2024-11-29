@@ -17,6 +17,8 @@ public class StudentBusiness : IBaseBusiness<Student>
 
     public List<Student> GetAll()
     {
+
+        //USE EF -> Use an ORM
         List<Student> students = new List<Student>();
 
         // Replace "YourTableName" with the actual name of the table you want to query

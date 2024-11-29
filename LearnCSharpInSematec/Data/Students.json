@@ -6,7 +6,17 @@
     "LastName": "درویشی",
     "PhoneNumber": "09129564205",
     "LastDocument": "کارشناسی ارشد",
-    "Gender": 1
+    "Gender": 1,
+    "Certificates": [
+      {
+        "Name": "C#",
+        "Score": 100
+      },
+      {
+        "Name": "SQL Server",
+        "Score": 90
+      }
+    ]
   },
   {
     "Id": 2,
